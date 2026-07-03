@@ -9,10 +9,25 @@ const {Config} = require("./config");
 
 const connectionString = process.env.DB_URL;
 const max = process.env.PG_POOL_SIZE && parseInt(process.env.PG_POOL_SIZE) || 10;
-log.info("pool settings:db:%s; pool size: %d", connectionString, max);
-const pool = new Pool({ 
+const statementTimeout = process.env.STATEMENT_TIMEOUT && parseInt(process.env.STATEMENT_TIMEOUT) || 30000;
+log.info("pool settings:db:%s; pool size: %d; statement_timeout: %d", connectionString, max, statementTimeout);
+const pool = new Pool({
   connectionString,
   max,
+});
+
+//kill any query that runs longer than statementTimeout on our side,
+//instead of waiting for the database server's 600s limit
+pool.on('connect', (client) => {
+  client.query(`SET statement_timeout = ${statementTimeout}`).catch(e => {
+    log.error("failed to set statement_timeout:", e);
+  });
+});
+
+//an idle client that errors (e.g. its connection is dropped) makes the pool
+//emit 'error'; without a listener that event crashes the whole process
+pool.on('error', (e) => {
+  log.error("idle db client error:", e);
 });
 
 const config = new Config(pool);
@@ -43,25 +58,27 @@ app.use('/viewer/images', express.static(images));
 
 
 async function buildMapInstance(x, y, z, params){
-  const map = await new Promise(async (res, rej) => {
+  //do the async work OUTSIDE the Promise executor: a throw/rejection inside
+  //an async executor does not reject the outer promise, it leaves it pending
+  //forever and the http request hangs with no response
+  const bboxDb = mercator.xyz_to_envelope_db_buffer(//x, y, z, false);
+    parseInt(x),
+    parseInt(y),
+    parseInt(z),
+    false,
+    100,
+  );
+  const bounds = bboxDb.join(",");
+  log.debug("bounds:", bounds);
+  const xmlString = await config.getXMLString({
+    zoomLevel: z,
+    bounds,
+    ...params,
+  });
+
+  const map = await new Promise((res, rej) => {
     const mapInstance = new mapnik.Map(256, 256);
     mapInstance.registerFonts(path.join(__dirname, '../test/data/map-a/'), {recurse:true});
-
-    const bboxDb = mercator.xyz_to_envelope_db_buffer(//x, y, z, false);
-      parseInt(x),
-      parseInt(y),
-      parseInt(z), 
-      false,
-      100,
-    );
-    const bounds = bboxDb.join(",");
-    log.debug("bounds:", bounds);
-    const xmlString = await config.getXMLString({
-      zoomLevel: z,
-      bounds,
-      ...params,
-    });
-
     mapInstance.fromString(xmlString, {
       strict: true,
       base: __dirname,
