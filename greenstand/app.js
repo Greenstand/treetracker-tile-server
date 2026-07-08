@@ -9,7 +9,8 @@ const {Config} = require("./config");
 
 const connectionString = process.env.DB_URL;
 const max = process.env.PG_POOL_SIZE && parseInt(process.env.PG_POOL_SIZE) || 10;
-const statementTimeout = process.env.STATEMENT_TIMEOUT && parseInt(process.env.STATEMENT_TIMEOUT) || 30000;
+//default must stay below the CloudFront edge timeout (30s) so the DB gives up first and the edge does not retry the same query
+const statementTimeout = process.env.STATEMENT_TIMEOUT && parseInt(process.env.STATEMENT_TIMEOUT) || 25000;
 log.info("pool settings:db:%s; pool size: %d; statement_timeout: %d", connectionString, max, statementTimeout);
 const pool = new Pool({
   connectionString,
