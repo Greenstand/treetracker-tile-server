@@ -1,4 +1,5 @@
-# node-mapnik
+# treetracker-tile-server
+**previously node-mapnik-1**
   
 Bindings to [Mapnik](http://mapnik.org) for [node](http://nodejs.org).
  
