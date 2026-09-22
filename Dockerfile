@@ -1,4 +1,4 @@
-FROM dadiorchen/tile2:first
+FROM greenstand/tile-server-base:first
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY . ./
