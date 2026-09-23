@@ -1,9 +1,9 @@
 {
   "name": "treetracker-map-tile-server",
-  "description": "Tile rendering library for node",
+  "description": "Treetracker tile rendering based on node-mapnik tile rendering library for node",
   "private": true,
   "homepage": "http://mapnik.org",
-  "author": "Dane Springmeyer <dane@mapbox.com> (mapnik.org)",
+  "author": "Greenstand Engineers, Dane Springmeyer <dane@mapbox.com> (mapnik.org)",
   "version": "4.36.3",
   "mapnik_version": "c3eda40e0",
   "main": "./lib/mapnik.js",
@@ -13,10 +13,6 @@
     "host": "https://mapbox-node-binary.s3.amazonaws.com",
     "remote_path": "./{name}/v{version}/{configuration}/{toolset}/",
     "package_name": "{platform}-{arch}.tar.gz"
-  },
-  "bugs": {
-    "email": "dane@mapbox.com",
-    "url": "http://github.com/mapnik/node-mapnik/issues"
   },
   "keywords": [
     "map",
@@ -28,9 +24,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/Greenstand/node-mapnik-1.git"
+    "url": "git://github.com/Greenstand/treetracker-tile-server.git"
   },
   "contributors": [
+    "Greenstand Engineers",
     "Konstantin Käfer",
     "Blake Thompson"
   ],
