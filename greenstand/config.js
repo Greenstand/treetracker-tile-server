@@ -124,6 +124,7 @@ class Config {
       //are too many, making the geojson too big
       zoomLevelInt >= 1 && zoomLevelInt <= ZOOM_LEVEL_THRETHOLD_OF_CLUSTER
     ) ? true : false;
+
     function checkUseBounds() {
       if (zoomLevelInt > ZOOM_LEVEL_THRETHOLD_OF_CLUSTER) {
         //mapnik would add the bounds automatically
@@ -131,8 +132,8 @@ class Config {
         return false;
       }
       if (map_name) {
-        log.info("org map always use global data set");
-        return false;
+        log.info("org map always use bounds");
+        return true;
       } else if (wallet) {
         log.info("wallet map always use global data set");
         return false;
@@ -147,6 +148,7 @@ class Config {
         return false;
       }
     }
+
     const useBounds = checkUseBounds();
     const map = new Map(this.pool);
     await map.init({
