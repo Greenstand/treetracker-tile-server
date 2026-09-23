@@ -56,13 +56,13 @@ async function buildMapInstance(x, y, z, params){
     );
     const bounds = bboxDb.join(",");
     log.debug("bounds:", bounds);
-    const xmlString = await config.getXMLString({
+    const configurationString = await config.getXMLString({ // this is the main configuration
       zoomLevel: z,
       bounds,
       ...params,
     });
 
-    mapInstance.fromString(xmlString, {
+    mapInstance.fromString(configurationString, {
       strict: true,
       base: __dirname,
     },function(err,_map) {
