@@ -89,20 +89,20 @@ class Map{
         this.sql = new SQLCase2Wallet();
         this.sql.setBounds(this.bounds);
         this.sql.addFilterByWallet(this.wallet);
-      }else{
+      } else {
         if(treeCount > 2000){
           this.sql = new SQLCase1WithZoomTarget();
           this.sql.addFilterByWallet(this.wallet);
           this.sql.setZoomLevel(this.zoomLevel);
           this.sql.setBounds(this.bounds);
-        }else{
+        } else {
           this.sql = new SQLCase3();
           this.sql.setZoomLevel(this.zoomLevel);
-        this.sql.addFilterByWallet(this.wallet);
+          this.sql.addFilterByWallet(this.wallet);
           this.sql.setBounds(this.bounds);
         }
       }
-    }else if(this.mapName){
+    } else if(this.mapName) {
       /*
        * org map mode
        */
@@ -115,14 +115,14 @@ class Map{
         this.sql.setZoomLevel(this.zoomLevel);
         this.sql.addFilterByMapName(this.mapName);
         this.sql.setBounds(this.bounds);
-      }else{
+      } else {
         this.sql = new SQLCase1WithZoomTarget();
         this.sql.addMapNameFilter(this.mapName);
         this.sql.setBounds(this.bounds);
         this.sql.setZoomLevel(this.zoomLevel);
       }
 
-    }else if(this.timeline){
+    } else if(this.timeline) {
       if(this.zoomLevel > 15){
         this.sql = new SQLCase2Timeline();
         this.sql.addTimeline(this.timeline);
@@ -138,7 +138,7 @@ class Map{
         this.sql.setBounds(this.bounds);
         this.sql.setZoomLevel(this.zoomLevel);
       }
-    }else{
+    } else {
       /*
        * Normal map mode
        */
@@ -148,7 +148,7 @@ class Map{
       } else if ([12, 13, 14, 15].includes(this.zoomLevel)) {
         this.sql = new SQLCase4();
         this.sql.setBounds(this.bounds)
-      }else{
+      } else {
         this.sql = new SQLCase1WithZoomTarget();
         this.sql.setBounds(this.bounds)
         this.sql.setZoomLevel(this.zoomLevel);
