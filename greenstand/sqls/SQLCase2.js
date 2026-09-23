@@ -109,24 +109,24 @@ class SQLCase2 {
     if (this.mapName) {
       //replace the withClause 
       withClause = `
-WITH RECURSIVE organization_children AS (
-    SELECT entity.id, entity_relationship.parent_id, 1 as depth, entity_relationship.type, entity_relationship.role
-    FROM entity
-    LEFT JOIN entity_relationship ON entity_relationship.child_id = entity.id
-    WHERE entity.id IN (SELECT id FROM entity WHERE map_name = '${this.mapName}')
-    UNION
-    SELECT next_child.id, entity_relationship.parent_id, depth + 1, entity_relationship.type, entity_relationship.role
-    FROM entity next_child
-    JOIN entity_relationship ON entity_relationship.child_id = next_child.id
-    JOIN organization_children c ON entity_relationship.parent_id = c.id
-    )
-,planter_in_org AS (
-	SELECT id FROM planter
-      JOIN (
-        SELECT id AS entity_id FROM organization_children LIMIT 20
-        ) org ON planter.organization_id = org.entity_id
-)
-     	`;
+        WITH RECURSIVE organization_children AS (
+          SELECT entity.id, entity_relationship.parent_id, 1 as depth, entity_relationship.type, entity_relationship.role
+          FROM entity
+          LEFT JOIN entity_relationship ON entity_relationship.child_id = entity.id
+          WHERE entity.id IN (SELECT id FROM entity WHERE map_name = '${this.mapName}')
+          UNION
+          SELECT next_child.id, entity_relationship.parent_id, depth + 1, entity_relationship.type, entity_relationship.role
+          FROM entity next_child
+          JOIN entity_relationship ON entity_relationship.child_id = next_child.id
+          JOIN organization_children c ON entity_relationship.parent_id = c.id
+        )
+        ,planter_in_org AS (
+          SELECT id FROM planter
+          JOIN (
+            SELECT id AS entity_id FROM organization_children LIMIT 20
+            ) org ON planter.organization_id = org.entity_id
+          )
+        `;
     }
     return withClause;
   }
@@ -138,7 +138,7 @@ WITH RECURSIVE organization_children AS (
       SELECT /* DISTINCT ON(trees.id) */
       'case2 tile' AS log,
       estimated_geometric_location,
-      St_asgeojson(estimated_geometric_location) latlon,
+      St_asgeojson(estimated_geometric_location) latlon, // TODO: this seems unnecessary hgere
       'point' AS type,
        trees.id, 
        trees.lat, 
