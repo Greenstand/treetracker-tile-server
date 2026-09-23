@@ -1,3 +1,10 @@
+## [4.36.4](https://github.com/Greenstand/treetracker-tile-server/compare/v4.36.3...v4.36.4) (2026-09-23)
+
+
+### Bug Fixes
+
+* some updates to package json ([9257b73](https://github.com/Greenstand/treetracker-tile-server/commit/9257b734154b572f16e11f11c128b0ff810380f5))
+
 ## [4.36.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.2...v4.36.3) (2026-09-23)
 
 
