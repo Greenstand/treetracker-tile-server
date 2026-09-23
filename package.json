@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "http://mapnik.org",
   "author": "Greenstand Engineers, Dane Springmeyer <dane@mapbox.com> (mapnik.org)",
-  "version": "4.36.4",
+  "version": "4.36.5",
   "mapnik_version": "c3eda40e0",
   "main": "./lib/mapnik.js",
   "binary": {

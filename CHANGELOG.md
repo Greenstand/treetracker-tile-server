@@ -1,3 +1,13 @@
+## [4.36.5](https://github.com/Greenstand/treetracker-tile-server/compare/v4.36.4...v4.36.5) (2026-09-23)
+
+
+### Bug Fixes
+
+* improve code formatting ([ae770c6](https://github.com/Greenstand/treetracker-tile-server/commit/ae770c6dda53d8fb73d7174dc112f22a8388b74d))
+* improve code formatting ([5734381](https://github.com/Greenstand/treetracker-tile-server/commit/573438191de9f2ecc28f076fa5c330b65ce9b9f1))
+* improve code formatting ([08b3b7c](https://github.com/Greenstand/treetracker-tile-server/commit/08b3b7c013d36796a0b049c2e6a13b656bab4f33))
+* org maps always use the bounding box ([e7d8ab8](https://github.com/Greenstand/treetracker-tile-server/commit/e7d8ab8027be738db31df1f86b0fa7ffd89973ec))
+
 ## [4.36.4](https://github.com/Greenstand/treetracker-tile-server/compare/v4.36.3...v4.36.4) (2026-09-23)
 
 
