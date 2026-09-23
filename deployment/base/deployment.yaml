@@ -23,6 +23,17 @@ spec:
                 operator: In
                 values:
                 - microservices-node-pool
+        # prefer spreading replicas across nodes, so one bad node cannot
+        # take out every tile server at once (soft rule: still schedules
+        # if only one node has room)
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: treetracker-tile-server
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: treetracker-tile-server
           image: greenstand/treetracker-map-tile-server:VERSION

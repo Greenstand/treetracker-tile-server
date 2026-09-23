@@ -10,7 +10,33 @@ spec:
     spec:
       containers:
         - name: treetracker-tile-server
+          # memory numbers baselined from production measurements
+          # (treetracker-infrastructure issue #315, July 3 2026):
+          # steady state 510-650Mi per pod; transient render spikes up to
+          # +458Mi that Kubernetes should allow (burst headroom), and a slow
+          # leak that the limit converts from node-killing evictions into
+          # clean in-place pod restarts. Re-baseline after the cache fix.
+          # cpu: steady state measured at 52-62 millicores (July 3 2026);
+          # request 2x steady for honest scheduling and contention weight.
+          # Deliberately NO cpu limit: limits throttle even on idle nodes,
+          # slow renders stack up concurrent requests and that raises the
+          # memory spikes this file exists to contain.
+          resources:
+            requests:
+              cpu: 100m
+              memory: 768Mi
+            limits:
+              memory: 1536Mi
           env:
+            # cap glibc malloc arenas (default is 8 per cpu = 16 here).
+            # The render path constantly allocates and frees 300-450MB of
+            # native memory; with 16 arenas that churn fragments and RSS
+            # ratchets up over days without any live memory growing.
+            # Verified unset in prod on 2026-07-03. If the slow memory
+            # creep flattens after this deploys, issue #315's RSS ratchet
+            # mechanism is confirmed.
+            - name: MALLOC_ARENA_MAX
+              value: "2"
             - name: PORT
               value: "3000"
             - name: PG_POOL_SIZE
