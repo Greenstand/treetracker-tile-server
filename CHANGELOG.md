@@ -1,3 +1,10 @@
+## [4.36.3](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.2...v4.36.3) (2026-09-23)
+
+
+### Bug Fixes
+
+* **deployment:** add resource requests/limits, arena cap, and spread tile server replicas ([58b78f8](https://github.com/Greenstand/node-mapnik-1/commit/58b78f8c8cab9d7e5b0456639c71d38d9d0598f9)), closes [#315](https://github.com/Greenstand/node-mapnik-1/issues/315) [Greenstand/treetracker-infrastructure#315](https://github.com/Greenstand/treetracker-infrastructure/issues/315)
+
 ## [4.36.2](https://github.com/Greenstand/node-mapnik-1/compare/v4.36.1...v4.36.2) (2026-06-30)
 
 
