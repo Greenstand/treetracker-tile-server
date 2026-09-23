@@ -16,7 +16,7 @@ jobs:
     name: Deploy selected tag to production environment, requires approval
     runs-on: ubuntu-latest
     if: |
-      github.repository == 'Greenstand/node-mapnik-1'
+      github.repository == 'Greenstand/treetracker-tile-server'
     steps:
       - uses: actions/checkout@v2
         with:
