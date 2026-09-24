@@ -1,3 +1,11 @@
+## [4.36.6](https://github.com/Greenstand/treetracker-tile-server/compare/v4.36.5...v4.36.6) (2026-09-24)
+
+
+### Bug Fixes
+
+* remove invalid position for comment, which breaks xml ([6a33b75](https://github.com/Greenstand/treetracker-tile-server/commit/6a33b7593d7d53efe0d5342788fe2ca8af95defa))
+* remove logging of annotation xml ([7ab96a3](https://github.com/Greenstand/treetracker-tile-server/commit/7ab96a35dc67396a69189389a4c4cdb0d5a0ee82))
+
 ## [4.36.5](https://github.com/Greenstand/treetracker-tile-server/compare/v4.36.4...v4.36.5) (2026-09-23)
 
 
