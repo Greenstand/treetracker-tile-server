@@ -138,7 +138,7 @@ class SQLCase2 {
       SELECT /* DISTINCT ON(trees.id) */
       'case2 tile' AS log,
       estimated_geometric_location,
-      St_asgeojson(estimated_geometric_location) latlon, // TODO: this seems unnecessary hgere
+      St_asgeojson(estimated_geometric_location) latlon, 
       'point' AS type,
        trees.id, 
        trees.lat, 
