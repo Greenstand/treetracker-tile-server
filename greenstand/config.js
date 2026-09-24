@@ -233,7 +233,7 @@ class Config {
         default:
           throw Error('wrong json value: ' + json);
       }
-      log.info(icon, json, tree, ':resolve xml:', result);
+      // log.info(icon, json, tree, ':resolve xml:', result);
       return result;
     }
 
