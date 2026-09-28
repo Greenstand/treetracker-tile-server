@@ -37,7 +37,10 @@
        <Parameter name="type"><![CDATA[postgis]]></Parameter>
        <Parameter name="extent"><![CDATA[-20037508.3,-20037508.3,20037508.3,20037508.3]]></Parameter>
        <Parameter name="max_size"><![CDATA[10]]></Parameter>
-       <Parameter name="table"><![CDATA[(SELECT * FROM trees WHERE active = true ORDER BY id DESC) as cdbq]]></Parameter>
+       <Parameter name="table"><![CDATA[(SELECT * FROM trees
+         WHERE active = true
+           AND estimated_geometric_location && !bbox!
+       ) AS cdbq]]></Parameter>
        <Parameter name="dbname"><![CDATA[treetracker_dev]]></Parameter>
        <Parameter name="geometry_field"><![CDATA[estimated_geometric_location]]></Parameter>
     </Datasource>
