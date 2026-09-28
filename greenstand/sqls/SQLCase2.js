@@ -3,11 +3,7 @@
  * on the map;
  */
 
-
-
 class SQLCase2 {
-
-
   addTreeFilter(treeid) {
     this.treeid = treeid;
   }
@@ -16,9 +12,8 @@ class SQLCase2 {
     this.uuid = uuid;
   }
 
-
   addTreesFilter() {
-    throw new Error("dedicated");
+    throw new Error('dedicated');
   }
 
   addFilterByUserId(userId) {
@@ -42,7 +37,7 @@ class SQLCase2 {
   }
 
   getFilter() {
-    let result = "";
+    let result = '';
     if (this.treeid) {
       result += 'AND trees.id = ' + this.treeid + ' \n';
     }
@@ -50,10 +45,10 @@ class SQLCase2 {
       result += 'AND trees.uuid = ' + this.uuid + ' \n';
     }
     if (this.userId) {
-      result += "AND trees.planter_id = " + this.userId + " \n";
+      result += 'AND trees.planter_id = ' + this.userId + ' \n';
     }
     if (this.wallet) {
-      result += "AND wallet.wallet.name = '" + this.wallet + "'\n"
+      result += "AND wallet.wallet.name = '" + this.wallet + "'\n";
     }
     if (this.mapName) {
       result += `
@@ -74,40 +69,52 @@ class SQLCase2 {
   }
 
   getBoundingBoxQuery() {
-    let result = "";
+    let result = '';
     if (this.bounds) {
-      result += 'AND trees.estimated_geometric_location && ST_MakeEnvelope(' + this.bounds + ', 4326) ';
+      result +=
+        'AND trees.estimated_geometric_location && ST_MakeEnvelope(' +
+        this.bounds +
+        ', 4326) ';
     }
     return result;
   }
 
   getJoinCriteria() {
-    let result = "";
+    let result = '';
     if (this.flavor) {
-      result += "AND tree_attributes.key = 'app_flavor' AND tree_attributes.value = '" + this.flavor + "'";
+      result +=
+        "AND tree_attributes.key = 'app_flavor' AND tree_attributes.value = '" +
+        this.flavor +
+        "'";
     }
     if (this.token) {
-      result += "INNER JOIN certificates ON trees.certificate_id = certificates.id AND certificates.token = '" + this.token + "'";
+      result +=
+        "INNER JOIN certificates ON trees.certificate_id = certificates.id AND certificates.token = '" +
+        this.token +
+        "'";
     }
     return result;
   }
 
   getJoin() {
-    let result = "";
+    let result = '';
     if (this.wallet) {
-      result += 'INNER JOIN wallet.token ON wallet.token.capture_id::text = lower(trees.uuid) \n';
-      result += 'INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id \n';
+      result +=
+        'INNER JOIN wallet.token ON wallet.token.capture_id::text = lower(trees.uuid) \n';
+      result +=
+        'INNER JOIN wallet.wallet ON wallet.wallet.id = wallet.token.wallet_id \n';
     }
     if (this.flavor) {
-      result += "INNER JOIN tree_attributes ON tree_attributes.tree_id = trees.id";
+      result +=
+        'INNER JOIN tree_attributes ON tree_attributes.tree_id = trees.id';
     }
     return result;
   }
 
   getWith() {
-    let withClause = `WITH placeholder AS (SELECT 1)`;
+    let withClause = '';
     if (this.mapName) {
-      //replace the withClause 
+      // Organization map queries need the recursive relationship CTE.
       withClause = `
         WITH RECURSIVE organization_children AS (
           SELECT entity.id, entity_relationship.parent_id, 1 as depth, entity_relationship.type, entity_relationship.role
@@ -151,13 +158,10 @@ class SQLCase2 {
       ${this.getBoundingBoxQuery()}
       ${this.getFilter()}
       ${this.getJoinCriteria()}
-      ORDER BY ID DESC
-    `
-      ;
+    `;
     console.log(sql);
     return sql;
   }
 }
-
 
 module.exports = SQLCase2;
