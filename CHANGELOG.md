@@ -1,3 +1,10 @@
+## [4.36.7](https://github.com/Greenstand/treetracker-tile-server/compare/v4.36.6...v4.36.7) (2026-09-29)
+
+
+### Bug Fixes
+
+* remove MALLOC_ARENA_MAX ([fedaf16](https://github.com/Greenstand/treetracker-tile-server/commit/fedaf16c39b9987910041cf33f73a7c8cb2dab91))
+
 ## [4.36.6](https://github.com/Greenstand/treetracker-tile-server/compare/v4.36.5...v4.36.6) (2026-09-24)
 
 
