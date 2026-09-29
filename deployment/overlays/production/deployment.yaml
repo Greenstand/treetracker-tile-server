@@ -35,8 +35,6 @@ spec:
             # Verified unset in prod on 2026-07-03. If the slow memory
             # creep flattens after this deploys, issue #315's RSS ratchet
             # mechanism is confirmed.
-            - name: MALLOC_ARENA_MAX
-              value: "2"
             - name: PORT
               value: "3000"
             - name: PG_POOL_SIZE
