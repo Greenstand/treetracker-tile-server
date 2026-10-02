@@ -1,0 +1,8 @@
+resources:
+  - ../../base
+namespace: tile-server-beta
+patchesStrategicMerge:  
+  - database-connection-sealed-secret.yaml
+  - deployment.yaml
+  - mapping.yaml
+  # - namespace.yaml

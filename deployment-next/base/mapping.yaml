@@ -1,9 +1,0 @@
-apiVersion: getambassador.io/v2
-kind: Mapping
-metadata:
-  name: treetracker-tile-server
-spec:
-  prefix: /tiles-next/
-  service: treetracker-tile-server
-  rewrite: /
-  timeout_ms: 60000

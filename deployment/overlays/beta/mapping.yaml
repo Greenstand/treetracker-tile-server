@@ -3,8 +3,9 @@ kind: Mapping
 metadata:
   name: treetracker-tile-server
 spec:
-  timeout_ms: 0
-  cors:
+  prefix: /tiles-next/
+  rewrite: /
+  cors: 
     origins:
       - https://prod-k8s.treetracker.org
     methods: GET

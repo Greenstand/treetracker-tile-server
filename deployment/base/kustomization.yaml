@@ -1,3 +1,4 @@
+namespace: tile-server
 resources:
   - deployment.yaml
   - mapping.yaml

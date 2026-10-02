@@ -5,11 +5,18 @@ metadata:
   labels:
     app: treetracker-tile-server
 spec:
-  replicas: 6
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treetracker-tile-server
   template:
+    metadata:
+      labels:
+        app: treetracker-tile-server
     spec:
       containers:
         - name: treetracker-tile-server
+          image: greenstand/treetracker-map-tile-server:4.36.7
           env:
             - name: PORT
               value: "3000"
