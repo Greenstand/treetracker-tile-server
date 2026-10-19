@@ -15,6 +15,9 @@ class SQLCase2Timeline extends SQLCase2{
         AND trees.time_created > '${begin}' AND trees.time_created < '${end}'
       `;
     }
+    if(this.userId){
+      result += "AND trees.planter_id = " + this.userId + " \n";
+    }
     return result;
   }
 
