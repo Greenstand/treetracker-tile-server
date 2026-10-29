@@ -245,7 +245,9 @@ class Config {
         :
         getXML({ icon, json: true, tree: false });
 
-      result = await this.pgPool.getQuery(sql, (result) => {
+      //cache the geojson only, the cache key is the sql, and the sql does
+      //not depend on the icon, so the icon template is applied per request
+      const geojson = await this.pgPool.getQuery(sql, (result) => {
         log.debug("result:", result);
         const points = result.rows.map(row => {
           const coord = JSON.parse(row.latlon).coordinates;
@@ -259,9 +261,9 @@ class Config {
           `{"type":"FeatureCollection","features":[{"type":"Feature","geometry":
   {"type":"Point","coordinates": [85,0]},"properties":{"count":1, "count_text": "1", "id": 99999, "latlon": {"type":"Point","coordinates":[85,0]}, "type": "cluster", "zoom_to": null}}]}`;
         log.debug("json:", json);
-        const resultHandled = xmlJsonTemplate.replace("json_data", json);
-        return resultHandled;
+        return json;
       });
+      result = xmlJsonTemplate.replace("json_data", geojson);
       log.info("xml length:", result.length);
       if (result.length > 1024 * 1024 * 5) {
         log.warn("the geojons is kind of too big!");

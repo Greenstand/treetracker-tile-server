@@ -59,8 +59,9 @@ class PGPool{
 
   /*
    * handleResult to manipulate the result , here 
-   * is translate the result of db rows to mapnik
-   * xml config
+   * is translate the result of db rows to geojson.
+   * The cache key is the sql only, so the result
+   * must not depend on anything else, like the icon
    */
   getQuery(sql, handleResult){
     log.info("get query");
